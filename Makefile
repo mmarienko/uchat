@@ -1,0 +1,1 @@
+//gcc src/*.c -o uchat `pkg-config --cflags --libs gtk+-3.0`
