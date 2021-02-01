@@ -4,4 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
-const char *password = "secret";
+struct t_user
+{
+    const gchar *name;
+    const gchar *password;
+} user;
