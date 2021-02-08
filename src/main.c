@@ -12,47 +12,111 @@ void check_password(GtkWidget *button, gpointer data)
     printf("%s\n", password);
 }
 
-void add_chat(const gchar* title, gpointer data) {
+void add_chat(const gchar *title, gpointer data)
+{
+     // create components
     GtkWidget *stack = (GtkWidget *)data;
-
     GtkWidget *label = gtk_label_new(title);
     gtk_stack_add_named(GTK_STACK(stack), label, title);
     gtk_container_child_set(GTK_CONTAINER(stack), label, "title", title, NULL);
+
+    // show all
+    gtk_widget_show_all(stack);
+}
+
+void add_chat_window(GtkWidget *button, gpointer data)
+{
+    // local variables
+    GtkWidget *dialog;
+    GtkWidget *label;
+    GtkWidget *entry;
+    GtkWidget *content_area;
+
+    // create components
+    dialog = gtk_dialog_new_with_buttons("Crete new chat",
+                                         GTK_WINDOW(window),
+                                         GTK_DIALOG_MODAL,
+                                         ("Create"),
+                                         GTK_RESPONSE_OK,
+                                         ("Cancel"),
+                                         GTK_RESPONSE_REJECT,
+                                         NULL);
+
+    label = gtk_label_new("Enter chat name");
+    entry = gtk_entry_new();
+    content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
+
+    // packing
+    gtk_container_set_border_width(GTK_CONTAINER(content_area), 10);
+    gtk_box_pack_start(GTK_BOX(content_area), entry, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(content_area), label, TRUE, FALSE, 10);
+
+    //show all
+    gtk_widget_show_all(content_area);
+
+    //listener
+    gint result = gtk_dialog_run(GTK_DIALOG(dialog));
+
+    switch (result)
+    {
+    case GTK_RESPONSE_OK:
+        add_chat(gtk_entry_get_text(GTK_ENTRY(entry)), (GtkWidget *)data);
+        puts("ok");
+        break;
+    case GTK_RESPONSE_REJECT:
+        puts("cancel");
+        break;
+    default:
+        printf("%d",result);
+        break;
+    }
+
+    //end
+    gtk_widget_destroy(dialog);
 }
 
 void open_uchat(GtkWidget *button, gpointer data)
 {
     // change window
-    GtkWidget *window = (GtkWidget *)data;
+    window = (GtkWidget *)data;
     gtk_widget_destroy(gtk_bin_get_child(GTK_BIN(window)));
     gtk_window_resize(GTK_WINDOW(window), 600, 400);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER_ALWAYS);
     gtk_container_set_border_width(GTK_CONTAINER(window), 0);
 
-    // global variables
+    // local variables
     GtkWidget *sidebar;
     GtkWidget *stack;
-    GtkWidget *hbox;
+    GtkWidget *hbox, *vbox;
     GtkWidget *separator;
+    GtkWidget *message_entry;
+    GtkWidget *add_chat_button, *message_button;
 
     // sidebar init
     sidebar = gtk_stack_sidebar_new();
     stack = gtk_stack_new();
     separator = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
     hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    message_entry = gtk_entry_new();
 
     gtk_stack_set_transition_type(GTK_STACK(stack), GTK_STACK_TRANSITION_TYPE_SLIDE_UP_DOWN);
     gtk_stack_sidebar_set_stack(GTK_STACK_SIDEBAR(sidebar), GTK_STACK(stack));
 
+    add_chat_button = gtk_button_new_with_label("Add chat");
+    message_button = gtk_button_new_with_label("Send"); // not implemented
+
+    g_signal_connect(G_OBJECT(add_chat_button), "clicked", G_CALLBACK(add_chat_window), stack);
+
     // packing
-    gtk_box_pack_start(GTK_BOX(hbox), sidebar, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), sidebar, TRUE, TRUE, 0);
+    gtk_box_pack_end(GTK_BOX(vbox), add_chat_button, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), separator, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), stack, TRUE, TRUE, 0);
 
     // code
-    add_chat("dasdasda", stack);
-    add_chat("das5235235dasda", stack);
-    add_chat("dasdgdfgdfgdfgdfasda", stack);
+    add_chat("roma lox", stack);
     // END
 
     gtk_container_add(GTK_CONTAINER(window), hbox);
@@ -61,9 +125,9 @@ void open_uchat(GtkWidget *button, gpointer data)
 
 int main(int argc, char *argv[])
 {
+    // local variables
     GtkWidget *box;
     GtkWidget *stack;
-    GtkWidget *window;
     GtkWidget *switcher;
 
     GtkWidget *log_username_label, *log_password_label, *log_error_label;
@@ -111,7 +175,6 @@ int main(int argc, char *argv[])
     // login actions
     log_ok_button = gtk_button_new_with_label("OK");
 
-    /*user.name = gtk_entry_get_text(GTK_ENTRY(log_password_entry)); - использование структуры  */
     g_signal_connect(G_OBJECT(log_ok_button), "clicked", G_CALLBACK(check_username), log_username_entry);
     g_signal_connect(G_OBJECT(log_ok_button), "clicked", G_CALLBACK(check_password), log_password_entry);
     g_signal_connect(G_OBJECT(log_ok_button), "clicked", G_CALLBACK(open_uchat), window);
