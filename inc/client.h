@@ -6,7 +6,11 @@
 
 // functions
 void init_authorization(void);
-void init_chat(GtkWidget *button, gpointer data);
+void init_chat(void);
+void popup_add_chat(void);
+void popup_add_user(void);
+
+void add_chat(const gchar *title);
 
 // Global window
 GtkWidget *window;
@@ -33,11 +37,25 @@ GtkWidget *chat_sidebar;
 GtkWidget *chat_stack;
 GtkWidget *chat_hbox, *chat_vbox;
 GtkWidget *chat_separator;
-GtkWidget *chat_message_entry;
-GtkWidget *chat_add_button, *chat_message_button;
+GtkWidget *chat_add_button;
+
+GtkWidget *chat_text_area;
+GtkWidget *chat_text_scrolled_window;
+GtkWidget *chat_text_vbox;
+GtkWidget *chat_text_send_button, *chat_text_add_button;
+GtkWidget *chat_text_hbox;
+GtkWidget *chat_text_entry;
+
+GtkTextBuffer *buffer;
 
 // popup add_chat
-GtkWidget *popup_dialog;
-GtkWidget *popup_label;
-GtkWidget *popup_entry;
-GtkWidget *popup_content_area;
+GtkWidget *add_chat_dialog;
+GtkWidget *add_chat_label;
+GtkWidget *add_chat_entry;
+GtkWidget *add_chat_content_area;
+
+// popup add_user
+GtkWidget *add_user_dialog;
+GtkWidget *add_user_label;
+GtkWidget *add_user_entry;
+GtkWidget *add_user_content_area;

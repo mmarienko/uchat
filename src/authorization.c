@@ -44,7 +44,7 @@ void init_authorization()
 
   g_signal_connect(G_OBJECT(log_ok_button), "clicked", G_CALLBACK(check_username), log_username_entry);
   g_signal_connect(G_OBJECT(log_ok_button), "clicked", G_CALLBACK(check_password), log_password_entry);
-  g_signal_connect(G_OBJECT(log_ok_button), "clicked", G_CALLBACK(init_chat), window);
+  g_signal_connect(G_OBJECT(log_ok_button), "clicked", G_CALLBACK(init_chat), NULL);
 
   // login packing
   log_hbox_username = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
@@ -92,7 +92,7 @@ void init_authorization()
   g_signal_connect(G_OBJECT(reg_ok_button), "clicked", G_CALLBACK(check_username), reg_username_entry);
   g_signal_connect(G_OBJECT(reg_ok_button), "clicked", G_CALLBACK(check_password), reg_password_entry);
   g_signal_connect(G_OBJECT(reg_ok_button), "clicked", G_CALLBACK(check_password), reg_password_entry_repeat);
-  g_signal_connect(G_OBJECT(reg_ok_button), "clicked", G_CALLBACK(init_chat), window);
+  g_signal_connect(G_OBJECT(reg_ok_button), "clicked", G_CALLBACK(init_chat), NULL);
 
   // reg packing
   reg_hbox_username = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
