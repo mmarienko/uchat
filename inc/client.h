@@ -11,9 +11,12 @@ void popup_add_chat(void);
 void popup_add_user(void);
 
 void add_chat(const gchar *title);
+void apply_css(GtkWidget *widget, GtkStyleProvider *provider);
 
 // Global window
 GtkWidget *window;
+GtkStyleProvider *provider;
+GtkStyleContext *context;
 
 // Authorization
 GtkWidget *authorization_box;
@@ -33,17 +36,19 @@ GtkWidget *reg_hbox_username, *reg_hbox_password, *reg_hbox_password_repeat, *re
 GtkWidget *reg_vbox;
 
 // chat
+GtkWidget *chat_label_top;
 GtkWidget *chat_sidebar;
 GtkWidget *chat_stack;
-GtkWidget *chat_hbox, *chat_vbox;
+GtkWidget *chat_hbox, *chat_vbox, *chat_top_hbox;
 GtkWidget *chat_separator;
 GtkWidget *chat_add_button;
 
+
+GtkWidget *chat_text_label_top;
 GtkWidget *chat_text_area;
 GtkWidget *chat_text_scrolled_window;
-GtkWidget *chat_text_vbox;
-GtkWidget *chat_text_send_button, *chat_text_add_button;
-GtkWidget *chat_text_hbox;
+GtkWidget *chat_text_vbox, *chat_text_hbox, *chat_text_top_hbox;
+GtkWidget *chat_text_add_button, *chat_text_send_button;
 GtkWidget *chat_text_entry;
 
 GtkTextBuffer *buffer;

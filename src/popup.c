@@ -21,6 +21,7 @@ void popup_add_chat()
     gtk_box_pack_start(GTK_BOX(add_chat_content_area), add_chat_entry, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(add_chat_content_area), add_chat_label, TRUE, FALSE, 10);
 
+apply_css (window, provider);
     // show all
     gtk_widget_show_all(add_chat_content_area);
 
@@ -38,11 +39,12 @@ void popup_add_chat()
         break;
     default:
         printf("%d",result);
+        gtk_widget_destroy(add_chat_dialog);
         break;
     }
 
     // end
-    gtk_widget_destroy(add_chat_dialog);
+    
 }
 
 void popup_add_user()
@@ -66,6 +68,7 @@ void popup_add_user()
     gtk_box_pack_start(GTK_BOX(add_user_content_area), add_user_entry, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(add_user_content_area), add_user_label, TRUE, FALSE, 10);
 
+apply_css (window, provider);
     // show all
     gtk_widget_show_all(add_user_content_area);
 
@@ -82,9 +85,8 @@ void popup_add_user()
         break;
     default:
         printf("%d",result);
+        gtk_widget_destroy(add_user_dialog);
         break;
     }
 
-    // end
-    gtk_widget_destroy(add_user_dialog);
 }
